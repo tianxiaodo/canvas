@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1000px" height="1000px" style="border:1px solid #d3d3d3;"></canvas>
+</body>
+<script type="text/javascript">
+
+    var center={
+                x:200,
+                y:200,
+                r:50,
+                counter:false
+                };
+
+
+//    var c=document.getElementById("canvas");
+//    var ctx=c.getContext("2d");
+//    ctx.beginPath();
+//    ctx.arc(100,75,50,0,2*Math.PI);
+//    ctx.stroke();
+    var c=document.getElementById("canvas");
+    var ctx= c.getContext("2d");
+    //drawArc(0,0.5);
+    function drawArc(sAngle,eAngle){
+
+
+            ctx.fillStyle="red";
+            ctx.beginPath();
+            ctx.arc(center.x,center.y,center.r,sAngle*Math.PI,eAngle*Math.PI,center.counter);
+            ctx.fill();
+            ctx.stroke();
+
+
+
+    }
+    var color = ["#27255F","#2F368F","#3666B0","#2CA8E0","#77D1F6"];  /*5组扇形，不同颜色*/
+    var data = [5,30,15,30,20];   /*扇形的角度百分比，5组加起来正好是100*/
+    var startPoint = 0;  /*其实点位置*/
+    var o={x:300,y:200}/*坐标原点*/,rectbox={ox:0,oy:0,wid:700,hei:400}/*画布大小*/,radius=150/*圆半径*/;
+    function drawfan(seq){
+        ctx.fillStyle =color[seq];
+        ctx.strokeStyle = color[seq];
+        ctx.moveTo(o.x,o.y);
+        var sp=seq==0?0:(data[seq-1]/100)*Math.PI*2;
+        var ep=Math.PI*2*(data[seq]/100);
+        ctx.arc(o.x,o.y,radius,sp,ep,false);
+        ctx.fill();
+        ctx.stroke();
+        console.log(sp/Math.PI/2,ep);
+        //startPoint = Math.PI*2*(data[seq]/100);
+    }
+    function j(index){
+        if(index=0){
+            return data[0]/100;
+        }
+        else{
+            return arguments.callee(index-1)+data[index]/100;
+        }
+    }
+
+</script>
+</html>

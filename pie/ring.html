@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title></title>
+        <style>
+            
+            *{margin:0;padding:0}
+            html,body{width:100%;height:100%;}
+            #canvas{
+                display: block;
+                width:400px;
+                height:400px;
+                margin:100px auto;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id='canvas' width="400" height="400" style="border:1px solid #d3d3d3;"></canvas> 
+    </body>
+    <script>
+
+         var d={
+            code:0,
+            msg:"",
+            data:[
+             {
+                question: {
+                  right: 5,
+                  wrong: 0.5,
+                  half: 2,
+                  none: 2.5,
+                  percent: 80
+                },
+                info: [
+                  {
+                    "question_id": 3123132,
+                    "question_name": "选择题",
+                    "status": 1
+                  },
+                  {
+                    "question_id": 31233132,
+                    "question_name": "复合题",
+                    "status": 1,
+                    "children": [
+                    ]
+                  },
+                  {
+                    "question_id": 3123132,
+                    "question_name": "选择题",
+                    "status": 2
+                  },
+                  {
+                    "question_id": 3123132,
+                    "question_name": "选择题",
+                    "status": 2
+                  }
+                ]
+              }
+            ]
+        }
+        var question=d.data[0].question;
+        var data=[question.right,question.wrong,question.half,question.none];
+        var color=[{s:"#74d2fc",e:"#607afd"},{s:"#ff959a",e:"#ef2029"},{s:"#fee5a9",e:"#fdc93d"},{s:"#c5d2f8",e:"909bb2"}];
+        var c=document.getElementById("canvas");
+        var ctx=c.getContext("2d");
+        var position,sum=eval(data.join("+"));
+        
+        for(var i=0;i<data.length;i++){
+            
+            ctx.beginPath();
+
+            var begin=i==0?0:position;
+            var end=data[i]/sum*2*Math.PI;
+            //ctx.lineWidth=100;
+             ctx.arc(200,200,100,begin,end);
+             ctx.lineTo(200,200);
+            // ctx.fillStyle="gray";
+            //ctx.fill();
+            
+            //  ctx.beginPath();
+            // ctx.arc(200,200,100,0,1*Math.PI);
+            // ctx.lineTo(200,200);
+            var grd=ctx.createRadialGradient(200,200,100,200,200,10);
+            grd.addColorStop(0,color[i].e);
+            grd.addColorStop(1,color[i].s);
+            ctx.fillStyle=grd;
+            // ctx.fillStyle="red";
+            
+            ctx.fill();
+            position=end;
+            //ctx.strokeStyle=grd;
+            //ctx.stroke();
+
+        }
+
+
+        
+      
+
+
+    </script>
+</html>
